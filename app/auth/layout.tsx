@@ -5,5 +5,5 @@ interface RootLayoutProps {
 }
 
 export default function AuthLayout({ children }: RootLayoutProps) {
-	return <div>{children}</div>;
+	return <div className='bg-blue-50 min-h-dvh'>{children}</div>;
 }
