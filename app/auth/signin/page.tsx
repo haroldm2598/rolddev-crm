@@ -1,19 +1,18 @@
+import Link from 'next/link';
 import Separator from '@/components/Separator';
 import { Button } from '@/components/ui/button';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import InputLabel from '../_component/InputLabel';
-import Link from 'next/link';
+import HeaderTitle from '../_component/HeaderTitle';
 
 export default function SigninPage() {
 	return (
 		<div className='flex justify-center items-center md:pt-10 pt-20'>
 			<div className='p-4 max-w-lg space-y-6'>
-				<section className='leading-5 text-center'>
-					<h1 className='font-bold text-2xl'>Welcome back</h1>
-					<h2 className='font-medium text-gray-500'>
-						Sign in your account to continue
-					</h2>
-				</section>
+				<HeaderTitle
+					title='Welcome back'
+					subTitle='Sign in your account to continue'
+				/>
 
 				<section className='space-y-4'>
 					<Button className='w-full' variant='outline'>
@@ -33,7 +32,7 @@ export default function SigninPage() {
 				</section>
 
 				<section className='text-center'>
-					<Link href='/'>Dont have an account? Sign up</Link>
+					<Link href='/auth/signup'>Dont have an account? Sign up</Link>
 				</section>
 
 				<section className='bg-white p-2 space-y-2 outline-1 outline-gray-400 rounded-lg'>
