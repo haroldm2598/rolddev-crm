@@ -5,5 +5,5 @@ interface DashboardLayout {
 }
 
 export default function DashboardLayout({ children }: DashboardLayout) {
-	return <div>{children}</div>;
+	return <div className='bg-blue-50 min-h-dvh'>{children}</div>;
 }
