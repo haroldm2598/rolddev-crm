@@ -1,33 +1,11 @@
-import { FaUser, FaUsers, FaShieldAlt } from 'react-icons/fa';
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Card from '@/components/Card';
-import { CardProps } from './_lib/types';
+import { useDataStore } from '@/lib/store';
 
-export default function page() {
-	// then transfer this dummy data inside zustand
-	const dataCard: CardProps[] = [
-		{
-			icon: FaUser,
-			bgColor: 'bg-blue-200',
-			iconColor: 'text-blue-700',
-			title: 'Social Authentication',
-			desc: 'Seamlessly authenticate users with Google, Github, and other popular social providers. No need to manage passwords or worry about security'
-		},
-		{
-			icon: FaUsers,
-			bgColor: 'bg-green-200',
-			iconColor: 'text-green-700',
-			title: 'Email & Password<',
-			desc: 'Traditional email and password authentication with secure password hashing, email verfication, and password reset functionality'
-		},
-		{
-			icon: FaShieldAlt,
-			bgColor: 'bg-violet-200',
-			iconColor: 'text-violet-700',
-			title: 'Secure & Protected',
-			desc: 'Build-in security functions including, JWT tokens, session management and protected routes that only authenticated users can access'
-		}
-	];
+export default function Homepage() {
+	const dataCard = useDataStore((state) => state.homeCard);
 
 	return (
 		<div className='lg:mx-60 space-y-4 max-w-full'>

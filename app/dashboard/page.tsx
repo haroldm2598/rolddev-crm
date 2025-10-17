@@ -1,34 +1,12 @@
-import React from 'react';
+'use client';
+
 import UserProfile from './_component/UserProfile';
 import { Button } from '@/components/ui/button';
-import { CardProps } from '../(root)/_lib/types';
-import { FaLock, FaRegCheckCircle, FaUser } from 'react-icons/fa';
 import Card from '@/components/Card';
+import { useDataStore } from '@/lib/store';
 
 export default function DashboardPage() {
-	const dataCard: CardProps[] = [
-		{
-			icon: FaRegCheckCircle,
-			bgColor: 'bg-blue-200',
-			iconColor: 'text-blue-700',
-			title: 'Social Login',
-			desc: 'Seamlessly authenticate with Github, Google and other social providers'
-		},
-		{
-			icon: FaUser,
-			bgColor: 'bg-green-200',
-			iconColor: 'text-green-700',
-			title: 'User Management',
-			desc: 'Manage user accounts, profiles and authentication settings'
-		},
-		{
-			icon: FaLock,
-			bgColor: 'bg-violet-200',
-			iconColor: 'text-violet-700',
-			title: 'Secure Access',
-			desc: 'Protected routes and secure authentication flow with better-auth'
-		}
-	];
+	const dataCard = useDataStore((state) => state.dashboardCard);
 
 	return (
 		<div className='px-4 py-8'>
