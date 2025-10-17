@@ -1,7 +1,6 @@
-import { Button } from '@/components/ui/button';
-import React from 'react';
 import { FaUser, FaUsers, FaShieldAlt } from 'react-icons/fa';
-import Card from './_component/Card';
+import { Button } from '@/components/ui/button';
+import Card from '@/components/Card';
 import { CardProps } from './_lib/types';
 
 export default function page() {

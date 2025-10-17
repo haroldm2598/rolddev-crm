@@ -1,12 +1,39 @@
 import React from 'react';
 import UserProfile from './_component/UserProfile';
 import { Button } from '@/components/ui/button';
+import { CardProps } from '../(root)/_lib/types';
+import { FaLock, FaRegCheckCircle, FaUser } from 'react-icons/fa';
+import Card from '@/components/Card';
 
 export default function DashboardPage() {
+	const dataCard: CardProps[] = [
+		{
+			icon: FaRegCheckCircle,
+			bgColor: 'bg-blue-200',
+			iconColor: 'text-blue-700',
+			title: 'Social Login',
+			desc: 'Seamlessly authenticate with Github, Google and other social providers'
+		},
+		{
+			icon: FaUser,
+			bgColor: 'bg-green-200',
+			iconColor: 'text-green-700',
+			title: 'User Management',
+			desc: 'Manage user accounts, profiles and authentication settings'
+		},
+		{
+			icon: FaLock,
+			bgColor: 'bg-violet-200',
+			iconColor: 'text-violet-700',
+			title: 'Secure Access',
+			desc: 'Protected routes and secure authentication flow with better-auth'
+		}
+	];
+
 	return (
 		<div className='px-4 py-8'>
 			<div className='p-4 bg-white rounded-md shadow-sm space-y-8'>
-				<section className='flex justify-between'>
+				<section className='flex justify-between flex-col md:flex-row'>
 					<div className='space-y-2'>
 						<h1 className='font-bold text-2xl'>Welcome to Your Dashboard!</h1>
 						<h2>Manage your account and explore better-auth features</h2>
@@ -21,7 +48,7 @@ export default function DashboardPage() {
 				<section className='bg-blue-100/50 rounded-md shadow-sm p-4 space-y-4'>
 					<h1>Authentication Status</h1>
 
-					<div className='flex'>
+					<div className='flex flex-col md:flex-row gap-4 md:gap-0'>
 						{/* left */}
 						<div className='flex-1 flex flex-col gap-4'>
 							<div className='flex gap-2'>
@@ -47,6 +74,32 @@ export default function DashboardPage() {
 								<span>Yes</span>
 							</div>
 						</div>
+					</div>
+				</section>
+
+				<section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+					{dataCard.map((item, index) => {
+						return (
+							<Card
+								key={index}
+								cardColor='bg-gray-100'
+								icon={item.icon}
+								bgColor={item.bgColor}
+								iconColor={item.iconColor}
+								title={item.title}
+								desc={item.desc}
+							/>
+						);
+					})}
+				</section>
+
+				<section className='bg-gray-100 p-4 rounded-md shadow-sm space-y-2'>
+					<h1 className='font-medium'>Try this actions</h1>
+
+					<div className='space-x-4 space-y-4'>
+						<Button className='bg-violet-600'>Update Profile</Button>
+						<Button variant='outline'>Save Settings</Button>
+						<Button variant='outline'>Export Data</Button>
 					</div>
 				</section>
 			</div>
