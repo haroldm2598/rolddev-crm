@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 
 import { FaGithub, FaGoogle } from 'react-icons/fa';
@@ -7,8 +8,13 @@ import { Button } from '@/components/ui/button';
 
 import HeaderTitle from '../_component/HeaderTitle';
 import InputSignIn from '../_component/InputSignIn';
+import { signInSocial } from '@/lib/actions/auth-actions';
 
-export default async function SigninPage() {
+export default function SigninPage() {
+	const handleSocialAuth = async (provider: 'google' | 'github') => {
+		await signInSocial(provider);
+	};
+
 	return (
 		<div className='flex justify-center items-center md:pt-10 pt-20'>
 			<div className='p-4 max-w-lg space-y-6'>
@@ -18,10 +24,14 @@ export default async function SigninPage() {
 				/>
 
 				<section className='space-y-4'>
-					<Button className='w-full' variant='outline'>
+					<Button
+						onClick={() => handleSocialAuth('google')}
+						className='w-full'
+						variant='outline'
+					>
 						<FaGoogle /> Continue with Google
 					</Button>
-					<Button className='w-full'>
+					<Button onClick={() => handleSocialAuth('github')} className='w-full'>
 						<FaGithub /> Continue with Github
 					</Button>
 				</section>
