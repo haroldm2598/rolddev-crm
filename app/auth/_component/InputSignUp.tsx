@@ -14,6 +14,7 @@ import {
 	FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { signup } from '@/lib/actions/auth-actions';
 
 export default function InputSignUp() {
 	const form = useForm<SignUpFormValues>({
@@ -25,14 +26,15 @@ export default function InputSignUp() {
 		}
 	});
 
-	function onSubmit(values: SignUpFormValues) {
+	const onSubmit = async (values: SignUpFormValues) => {
 		// This function only runs if Zod validation PASSES!
-		console.log('Form submitted successfully:', values);
 		// TODO: Send data to your API for sign-in
-
+		const result = await signup(values.name, values.email, values.password);
+		// TODO: Send data to your API for sign-in
+		console.log('Form submitted successfully:', values);
 		// Example: show a success message (if using a toast library)
 		// toast({ title: "Sign In Successful!", description: "Welcome back." });
-	}
+	};
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
@@ -71,7 +73,11 @@ export default function InputSignUp() {
 						<FormItem>
 							<FormLabel>Password</FormLabel>
 							<FormControl>
-								<Input placeholder='Enter your password' {...field} />
+								<Input
+									placeholder='Enter your password'
+									type='password'
+									{...field}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
