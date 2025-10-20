@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignInFormValues, SignInSchema } from '../_lib/auth-zod';
@@ -14,9 +16,12 @@ import {
 	FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+
 import { signIn } from '@/lib/actions/auth-actions';
 
 export default function InputSignIn() {
+	const router = useRouter();
+
 	const form = useForm<SignInFormValues>({
 		resolver: zodResolver(SignInSchema), // RHF will use Zod's rules for validation
 		defaultValues: {
@@ -26,12 +31,8 @@ export default function InputSignIn() {
 	});
 
 	async function onSubmit(values: SignInFormValues) {
-		// This function only runs if Zod validation PASSES!
-		const result = await signIn(values.email, values.password);
-		// TODO: Send data to your API for sign-in
-		console.log('Form submitted successfully:', values);
-		// Example: show a success message (if using a toast library)
-		// toast({ title: "Sign In Successful!", description: "Welcome back." });
+		await signIn(values.email, values.password);
+		router.push('/dashboard');
 	}
 	return (
 		<Form {...form}>

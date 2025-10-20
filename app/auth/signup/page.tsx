@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import HeaderTitle from '../_component/HeaderTitle';
 import InputSignUp from '../_component/InputSignUp';
 
-export default function SignupPage() {
+export default async function SignupPage() {
 	return (
 		<div className='flex justify-center items-center md:pt-10 pt-20'>
 			<div className='p-4 max-w-lg space-y-6'>

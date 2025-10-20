@@ -1,15 +1,24 @@
 'use client';
+import { useRouter } from 'next/navigation';
 
 import UserProfile from './_component/UserProfile';
 import { Button } from '@/components/ui/button';
 import Card from '@/components/Card';
+
 import { useDataStore } from '@/lib/store';
+import { signOut } from '@/lib/actions/auth-actions';
 
 export default function DashboardPage() {
+	const router = useRouter();
 	const dataCard = useDataStore((state) => state.dashboardCard);
 
+	const handleSignout = async () => {
+		await signOut();
+		router.push('/auth/signin');
+	};
+
 	return (
-		<div className='px-4 py-8'>
+		<div className='lg:mx-60 px-4 py-8'>
 			<div className='p-4 bg-white rounded-md shadow-sm space-y-8'>
 				<section className='flex justify-between flex-col md:flex-row'>
 					<div className='space-y-2'>
@@ -19,7 +28,9 @@ export default function DashboardPage() {
 
 					<div className='flex items-center gap-2'>
 						<UserProfile name='John Doe' email='johndoe@testing.com' />
-						<Button variant='outline'>Sign Out</Button>
+						<Button variant='outline' onClick={handleSignout}>
+							Sign Out
+						</Button>
 					</div>
 				</section>
 
@@ -55,7 +66,7 @@ export default function DashboardPage() {
 					</div>
 				</section>
 
-				<section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+				<section className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
 					{dataCard.map((item, index) => {
 						return (
 							<Card

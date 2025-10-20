@@ -1,11 +1,14 @@
 import Link from 'next/link';
+
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+
 import Separator from '@/components/Separator';
 import { Button } from '@/components/ui/button';
-import { FaGithub, FaGoogle } from 'react-icons/fa';
+
 import HeaderTitle from '../_component/HeaderTitle';
 import InputSignIn from '../_component/InputSignIn';
 
-export default function SigninPage() {
+export default async function SigninPage() {
 	return (
 		<div className='flex justify-center items-center md:pt-10 pt-20'>
 			<div className='p-4 max-w-lg space-y-6'>
