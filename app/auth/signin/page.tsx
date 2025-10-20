@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Separator from '@/components/Separator';
 import { Button } from '@/components/ui/button';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import InputLabel from '../_component/InputLabel';
 import HeaderTitle from '../_component/HeaderTitle';
+import InputSignIn from '../_component/InputSignIn';
 
 export default function SigninPage() {
 	return (
@@ -25,10 +25,8 @@ export default function SigninPage() {
 
 				<Separator text='or continue with' />
 
-				<section className='space-y-4'>
-					<InputLabel title='Email address' id='email' type='email' />
-					<InputLabel title='Password' id='password' type='password' />
-					<Button className='w-full'>Sign In</Button>
+				<section>
+					<InputSignIn />
 				</section>
 
 				<section className='text-center'>

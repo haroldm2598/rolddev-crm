@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { FaGithub, FaGoogle } from 'react-icons/fa';
-import HeaderTitle from '../_component/HeaderTitle';
-import Separator from '@/components/Separator';
-import InputLabel from '../_component/InputLabel';
 import Link from 'next/link';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+import Separator from '@/components/Separator';
+import { Button } from '@/components/ui/button';
+import HeaderTitle from '../_component/HeaderTitle';
+import InputSignUp from '../_component/InputSignUp';
 
 export default function SignupPage() {
 	return (
@@ -25,11 +25,8 @@ export default function SignupPage() {
 
 				<Separator text='or continue with' />
 
-				<section className='space-y-4'>
-					<InputLabel title='Full name' id='name' type='text' />
-					<InputLabel title='Email address' id='email' type='email' />
-					<InputLabel title='Password' id='password' type='password' />
-					<Button className='w-full'>Sign Up</Button>
+				<section>
+					<InputSignUp />
 				</section>
 
 				<section className='text-center'>
