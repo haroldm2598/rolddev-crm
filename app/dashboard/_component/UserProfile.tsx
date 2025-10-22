@@ -1,9 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { AuthUser } from '@/lib/types/auth';
+import { User } from '@/lib/auth';
 
-type UserProfileProps = {
-	user: AuthUser | undefined; // Because session can be null
-};
+interface UserProfileProps {
+	user: User;
+}
 
 export default function UserProfile({ user }: UserProfileProps) {
 	return (

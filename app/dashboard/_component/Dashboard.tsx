@@ -4,11 +4,11 @@ import UserProfile from './UserProfile';
 import UserSignOut from './UserSignOut';
 import Card from '@/components/Card';
 import { Button } from '@/components/ui/button';
-import { AuthUser } from '@/lib/types/auth';
+import { User } from '@/lib/auth';
 
-type DashboardProps = {
-	user: AuthUser | undefined; // Because session can be null
-};
+interface DashboardProps {
+	user: User;
+}
 
 export default function Dashboard({ user }: DashboardProps) {
 	const dataCard = useDataStore((state) => state.dashboardCard);

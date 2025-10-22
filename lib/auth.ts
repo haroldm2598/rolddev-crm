@@ -10,13 +10,24 @@ export const auth = betterAuth({
 	},
 	socialProviders: {
 		github: {
-			clientId: process.env.GITHUB_CLIENT_ID as string,
-			clientSecret: process.env.GITHUB_CLIENT_SECRET as string
+			clientId: '',
+			clientSecret: ''
 		},
 		google: {
-			clientId: process.env.GOOGLE_CLIENT_ID as string,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+			clientId: '',
+			clientSecret: ''
 		}
 	},
-	plugins: [nextCookies()]
+	user: {
+		additionalFields: {
+			role: {
+				type: 'string',
+				input: false
+			}
+		}
+	}
+	// plugins: [nextCookies()]
 });
+
+export type Session = typeof auth.$Infer.Session;
+export type User = typeof auth.$Infer.Session.user;

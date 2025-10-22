@@ -84,6 +84,16 @@ export default function InputSignIn() {
 								<Input
 									type='password'
 									placeholder='Enter your password...'
+									onKeyDown={(event) => {
+										if (event.key === 'Enter') {
+											// Prevent the default behavior (in case it submits twice or you
+											// want to control the flow completely)
+											event.preventDefault();
+
+											// Manually trigger the form submission via react-hook-form
+											form.handleSubmit(onSubmit)();
+										}
+									}}
 									{...field}
 								/>
 							</FormControl>
