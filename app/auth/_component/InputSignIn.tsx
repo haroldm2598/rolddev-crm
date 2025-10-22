@@ -1,10 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignInFormValues, SignInSchema } from '../_lib/auth-zod';
+import { authClient } from '@/lib/auth-client';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,10 +18,14 @@ import {
 	FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
-import { signIn } from '@/lib/actions/auth-actions';
+// import { signIn } from '@/lib/actions/auth-actions';
 
 export default function InputSignIn() {
+	const [error, setError] = useState<string | null>(null);
+	const [loading, setLoading] = useState<boolean>(false);
+
 	const router = useRouter();
 
 	const form = useForm<SignInFormValues>({
@@ -30,9 +36,26 @@ export default function InputSignIn() {
 		}
 	});
 
+	// add enter key event when pressing that
 	async function onSubmit(values: SignInFormValues) {
-		await signIn(values.email, values.password);
-		router.push('/dashboard');
+		setError(null);
+		setLoading(true);
+
+		// await signIn(values.email, values.password);
+		const { email, password } = values;
+		const { error } = await authClient.signIn.email({
+			email,
+			password,
+			callbackURL: '/dashboard'
+		});
+
+		setLoading(false);
+		if (error) {
+			setError(error.message || 'something went wrong');
+		} else {
+			toast.success('sign in successfully');
+			router.push('/dashboard');
+		}
 	}
 	return (
 		<Form {...form}>

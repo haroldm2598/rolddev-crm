@@ -14,9 +14,15 @@ import {
 	FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { signup } from '@/lib/actions/auth-actions';
+// import { signup } from '@/lib/actions/auth-actions';
+import { authClient } from '@/lib/auth-client';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function InputSignUp() {
+	const [error, setError] = useState<string | null>(null);
+	const router = useRouter();
 	const form = useForm<SignUpFormValues>({
 		resolver: zodResolver(SignUpSchema), // RHF will use Zod's rules for validation
 		defaultValues: {
@@ -27,13 +33,24 @@ export default function InputSignUp() {
 	});
 
 	const onSubmit = async (values: SignUpFormValues) => {
-		// This function only runs if Zod validation PASSES!
-		// TODO: Send data to your API for sign-in
-		const result = await signup(values.name, values.email, values.password);
-		// TODO: Send data to your API for sign-in
-		console.log('Form submitted successfully:', values);
-		// Example: show a success message (if using a toast library)
-		// toast({ title: "Sign In Successful!", description: "Welcome back." });
+		setError(null);
+		// this way using SERVER ACTION
+		// await signup(values.name, values.email, values.password);
+		const { name, email, password } = values;
+		// callbackUrl must replace "email-verified path" is the page of that is done
+		const { error } = await authClient.signUp.email({
+			name,
+			email,
+			password,
+			callbackURL: '/dashboard'
+		});
+
+		if (error) {
+			setError(error.message || 'something went wrong');
+		} else {
+			toast.success('sign up successfully');
+			router.push('/dashboard');
+		}
 	};
 	return (
 		<Form {...form}>
@@ -83,6 +100,13 @@ export default function InputSignUp() {
 						</FormItem>
 					)}
 				/>
+
+				{error && (
+					<div role='alert' className='text-sm text-red-600'>
+						{error}
+					</div>
+				)}
+
 				<Button type='submit' className='w-full'>
 					Sign Up
 				</Button>

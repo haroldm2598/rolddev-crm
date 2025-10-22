@@ -1,3 +1,6 @@
+// TAKE NOTE
+// USING THIS SIDE IF YOU WANT TO USE SERVER COMPONENT
+
 'use server';
 
 import { headers } from 'next/headers';
