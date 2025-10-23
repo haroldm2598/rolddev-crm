@@ -8,5 +8,5 @@ export default async function DashboardPage() {
 
 	if (!user) unauthorized();
 
-	return <Dashboard user={user} />;
+	return <Dashboard />;
 }

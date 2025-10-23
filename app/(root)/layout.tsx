@@ -1,9 +1,21 @@
-import React from 'react';
+import { ReactNode } from 'react';
+import Navbar from '@/components/Navbar';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 interface RootLayoutProps {
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
-	return <div className='bg-blue-50 min-h-dvh p-4'>{children}</div>;
+export default async function RootLayout({ children }: RootLayoutProps) {
+	const session = await auth.api.getSession({
+		headers: await headers()
+	});
+
+	return (
+		<div className='bg-blue-50 min-h-dvh p-4'>
+			<Navbar session={session} />
+			{children}
+		</div>
+	);
 }

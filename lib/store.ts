@@ -18,11 +18,11 @@ interface StoreProps {
 
 export const useDataStore = create<StoreProps>((set, get) => ({
 	menuItems: [
-		{ name: 'Home', icon: Home, href: '/' },
-		{ name: 'All Users', icon: Users, href: '/users' },
-		{ name: 'All Books', icon: BookOpen, href: '/books' },
-		{ name: 'Borrow Requests', icon: ClipboardList, href: '/requests' },
-		{ name: 'Account Requests', icon: UserCheck, href: '/accounts' }
+		{ name: 'Home', icon: Home, href: '/dashboard' },
+		{ name: 'Analytics', icon: Users, href: '/dashboard/analytics' },
+		{ name: 'All Books', icon: BookOpen, href: '/dashboard/books' },
+		{ name: 'Borrow Requests', icon: ClipboardList, href: '/dashboard/borrow' },
+		{ name: 'Account Requests', icon: UserCheck, href: '/dashboard/user' }
 	],
 	homeCard: [
 		{

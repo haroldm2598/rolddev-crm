@@ -4,7 +4,7 @@ import Link from 'next/link';
 type Session = typeof auth.$Infer.Session;
 
 interface NavbarProps {
-	session: Session | null;
+	session?: Session | null;
 }
 
 export default function Navbar({ session }: NavbarProps) {

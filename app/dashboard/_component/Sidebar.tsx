@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Menu, X } from 'lucide-react';
 
@@ -17,6 +18,7 @@ interface DashboardProps {
 }
 
 export default function Sidebar({ user }: DashboardProps) {
+	const pathname = usePathname();
 	const [open, setOpen] = useState(false);
 	const menuItems = useDataStore((state) => state.menuItems);
 
@@ -51,21 +53,24 @@ export default function Sidebar({ user }: DashboardProps) {
 
 					{/* Nav Links */}
 					<nav className='flex flex-col space-y-2'>
-						{menuItems.map((item) => (
-							<Link
-								key={item.name}
-								href={item.href}
-								onClick={() => setOpen(false)}
-								className={cn(
-									'flex items-center gap-3 rounded-lg px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition',
-									item.name === 'Home' &&
-										'bg-blue-600 text-white hover:bg-blue-700'
-								)}
-							>
-								<item.icon className='w-5 h-5' />
-								{item.name}
-							</Link>
-						))}
+						{menuItems.map((item) => {
+							const isActive = pathname === item.href;
+
+							return (
+								<Link
+									key={item.name}
+									href={item.href}
+									onClick={() => setOpen(false)}
+									className={cn(
+										'flex items-center gap-3 rounded-lg px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition',
+										isActive && 'bg-blue-600 text-white hover:bg-blue-700'
+									)}
+								>
+									<item.icon className='w-5 h-5' />
+									{item.name}
+								</Link>
+							);
+						})}
 					</nav>
 				</div>
 
