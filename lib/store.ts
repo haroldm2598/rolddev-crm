@@ -1,4 +1,4 @@
-import { CardProps } from '@/app/(root)/_lib/types';
+import { CardProps, MenuItemProps } from '@/app/(root)/_lib/types';
 import {
 	FaLock,
 	FaRegCheckCircle,
@@ -6,14 +6,24 @@ import {
 	FaUser,
 	FaUsers
 } from 'react-icons/fa';
+import { Home, Users, BookOpen, ClipboardList, UserCheck } from 'lucide-react';
+
 import { create } from 'zustand';
 
 interface StoreProps {
+	menuItems: MenuItemProps[];
 	homeCard: CardProps[];
 	dashboardCard: CardProps[];
 }
 
 export const useDataStore = create<StoreProps>((set, get) => ({
+	menuItems: [
+		{ name: 'Home', icon: Home, href: '/' },
+		{ name: 'All Users', icon: Users, href: '/users' },
+		{ name: 'All Books', icon: BookOpen, href: '/books' },
+		{ name: 'Borrow Requests', icon: ClipboardList, href: '/requests' },
+		{ name: 'Account Requests', icon: UserCheck, href: '/accounts' }
+	],
 	homeCard: [
 		{
 			icon: FaUser,

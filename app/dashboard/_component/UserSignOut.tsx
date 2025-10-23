@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 
+import { FaSignOutAlt } from 'react-icons/fa';
+
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
@@ -22,8 +24,12 @@ export default function UserSignOut() {
 		}
 	};
 	return (
-		<Button variant='outline' onClick={handleSignout}>
-			Sign Out
+		// <Button variant='outline' onClick={handleSignout}>
+		// 	Sign Out
+		// </Button>
+
+		<Button variant='ghost' size='icon' onClick={handleSignout}>
+			<FaSignOutAlt className='w-4 h-4 text-gray-500' />
 		</Button>
 	);
 }

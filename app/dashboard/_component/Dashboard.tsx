@@ -22,10 +22,10 @@ export default function Dashboard({ user }: DashboardProps) {
 						<h2>Manage your account and explore better-auth features</h2>
 					</div>
 
-					<div className='flex items-center gap-2'>
+					{/* <div className='flex items-center gap-2'>
 						<UserProfile user={user} />
 						<UserSignOut />
-					</div>
+					</div> */}
 				</section>
 
 				<section className='bg-blue-100/50 rounded-md shadow-sm p-4 space-y-4'>
