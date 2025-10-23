@@ -9,14 +9,23 @@ import {
 import { Home, Users, BookOpen, ClipboardList, UserCheck } from 'lucide-react';
 
 import { create } from 'zustand';
+import { BookProps } from '@/app/dashboard/_lib/types';
 
 interface StoreProps {
 	menuItems: MenuItemProps[];
 	homeCard: CardProps[];
 	dashboardCard: CardProps[];
+	bookData: BookProps[];
+	limit: number;
+	setBooks: (bookData: BookProps[]) => void;
+	setLimit: (limit: number) => void;
 }
 
 export const useDataStore = create<StoreProps>((set, get) => ({
+	bookData: [],
+	limit: 3,
+	setBooks: (bookData: BookProps[]) => set({ bookData }),
+	setLimit: (limit: number) => set({ limit }),
 	menuItems: [
 		{ name: 'Home', icon: Home, href: '/dashboard' },
 		{ name: 'Analytics', icon: Users, href: '/dashboard/analytics' },
