@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { BookBorrow } from './BookBorrow';
 import { useDataStore } from '@/lib/store';
+import DashboardHeader from '@/components/DashboardHeader';
 
 export default function Dashboard() {
 	const { setBooks } = useDataStore();
@@ -20,7 +21,13 @@ export default function Dashboard() {
 	}, [setBooks]);
 
 	return (
-		<div className='lg:ml-72 lg:mr-10 px-4 py-20 lg:py-8'>
+		<div className='space-y-4'>
+			<header className='max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+				<DashboardHeader title='Barrowed Books' quantity={200} />
+				<DashboardHeader title='Total Books' quantity={499} />
+				<DashboardHeader title='Total Users' quantity={700} />
+			</header>
+
 			<section className='max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-4 '>
 				<div className='grid grid-cols-1 gap-4'>
 					<BookBorrow

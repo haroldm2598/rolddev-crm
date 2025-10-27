@@ -1,12 +1,23 @@
-import { Toaster } from '@/components/ui/sonner';
 import { ReactNode } from 'react';
-import Sidebar from './_component/Sidebar';
-import { getServerSession } from '@/lib/auth-get-sessions';
+import { Metadata } from 'next';
 import { unauthorized } from 'next/navigation';
+
+import Sidebar from './_component/Sidebar';
+import { Toaster } from '@/components/ui/sonner';
+
+import { getServerSession } from '@/lib/auth-get-sessions';
 
 interface DashboardLayout {
 	children: ReactNode;
 }
+
+export const metadata: Metadata = {
+	title: {
+		default: 'Dashboard | YourApp',
+		template: '%s | YourApp'
+	},
+	description: 'Access your dashboard analytics and insights.'
+};
 
 export default async function DashboardLayout({ children }: DashboardLayout) {
 	const session = await getServerSession();

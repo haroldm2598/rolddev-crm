@@ -21,6 +21,8 @@ interface StoreProps {
 	setLimit: (limit: number) => void;
 }
 
+// USAGE FOR OPEN MODAL, DARK MODE AND SELECT FILTERS LIKE THAT
+
 export const useDataStore = create<StoreProps>((set, get) => ({
 	bookData: [],
 	limit: 3,
