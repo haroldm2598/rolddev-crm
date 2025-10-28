@@ -4,7 +4,6 @@ import { unauthorized } from 'next/navigation';
 import { getServerSession } from '@/lib/auth-get-sessions';
 import Dashboard from './_component/Dashboard';
 import HeaderSearch from './_component/HeaderSearch';
-import { Fragment } from 'react';
 
 export const generateMetadata = async (): Promise<Metadata> => {
 	const dummyUserName = 'mikey';
@@ -29,7 +28,7 @@ export default async function DashboardPage() {
 	if (!user) unauthorized();
 
 	return (
-		<div className='lg:ml-72 lg:mr-10 px-4 py-20 lg:py-8 flex flex-col'>
+		<div className='lg:ml-96 px-4 py-20 lg:px-0 lg:py-8 max-w-7xl flex flex-col'>
 			<HeaderSearch user={user} />
 			<Dashboard />
 		</div>
