@@ -3,6 +3,7 @@
 import Image from 'next/image';
 
 import { Eye, Calendar, Plus } from 'lucide-react';
+import { ImFileEmpty } from 'react-icons/im';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BookProps } from '../_lib/types';
@@ -43,28 +44,30 @@ export function BookBorrow({
 					</div>
 				)}
 
-				{books.slice(0, limit).map((book) => (
-					<div
-						key={book.id}
-						className='flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-xl transition'
-					>
-						{/* Left side: book image and info */}
-						<div className='flex items-center gap-3'>
-							<Image
-								src={book.coverUrl}
-								alt={book.title}
-								width={45}
-								height={65}
-								className='rounded-md object-cover'
-							/>
-							<div className='flex flex-col'>
-								<h3 className='text-sm font-semibold text-gray-900'>
-									{book.title}
-								</h3>
-								<p className='text-xs text-gray-500'>
-									By {book.author} • {book.genres}
-								</p>
-								{/* <div className='flex items-center gap-2 mt-1'>
+				{/* CHANGE THIS INTO DATA COZ IM USING JSON ONLY */}
+				{limit !== 0 ? (
+					books.slice(0, limit).map((book) => (
+						<div
+							key={book.id}
+							className='flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-xl transition'
+						>
+							{/* Left side: book image and info */}
+							<div className='flex items-center gap-3'>
+								<Image
+									src={book.coverUrl}
+									alt={book.title}
+									width={45}
+									height={65}
+									className='rounded-md object-cover'
+								/>
+								<div className='flex flex-col'>
+									<h3 className='text-sm font-semibold text-gray-900'>
+										{book.title}
+									</h3>
+									<p className='text-xs text-gray-500'>
+										By {book.author} • {book.genres}
+									</p>
+									{/* <div className='flex items-center gap-2 mt-1'>
 									<Image
 										src={book.userAvatar}
 										alt={book.user}
@@ -78,21 +81,38 @@ export function BookBorrow({
 										{book.date}
 									</span>
 								</div> */}
+								</div>
 							</div>
+
+							{/* Right side: eye icon */}
+							<Button
+								variant='ghost'
+								size='icon'
+								className='hover:bg-blue-100 text-gray-500'
+							>
+								<Eye className='w-5 h-5' />
+							</Button>
+						</div>
+					))
+				) : (
+					<div className='flex flex-col items-center justify-center gap-4 h-full'>
+						<div className='size-28 bg-blue-200/10 flex items-center justify-center rounded-full'>
+							<ImFileEmpty className='size-18 text-gray-700/20' />
 						</div>
 
-						{/* Right side: eye icon */}
-						<Button
-							variant='ghost'
-							size='icon'
-							className='hover:bg-blue-100 text-gray-500'
-						>
-							<Eye className='w-5 h-5' />
-						</Button>
+						<h1 className='font-semibold text-lg'>No Pending Books</h1>
+						<p className='text-sm text-gray-400/90'>
+							There are no borrow book requests awaiting your review at this
+							time.
+						</p>
 					</div>
-				))}
+				)}
 
-				<div className='pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent' />
+				{limit !== 0 ? (
+					<div className='pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent' />
+				) : (
+					<></>
+				)}
 			</CardContent>
 		</Card>
 	);

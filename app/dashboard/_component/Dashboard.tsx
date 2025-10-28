@@ -40,7 +40,7 @@ export default function Dashboard() {
 						title='Account Resquested'
 						createBook={false}
 						books={books}
-						limit={3}
+						limit={0}
 					/>
 				</div>
 
