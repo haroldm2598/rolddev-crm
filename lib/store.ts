@@ -31,7 +31,7 @@ export const useDataStore = create<StoreProps>((set, get) => ({
 	menuItems: [
 		{ name: 'Home', icon: Home, href: '/dashboard' },
 		{ name: 'Analytics', icon: Users, href: '/dashboard/analytics' },
-		{ name: 'All Books', icon: BookOpen, href: '/dashboard/books' },
+		{ name: 'All Books', icon: BookOpen, href: '/dashboard/allbooks' },
 		{ name: 'Borrow Requests', icon: ClipboardList, href: '/dashboard/borrow' },
 		{ name: 'Account Requests', icon: UserCheck, href: '/dashboard/user' }
 	],
