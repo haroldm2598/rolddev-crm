@@ -1,46 +1,55 @@
-'use client';
-// import { Metadata } from 'next';
-// import { TableBook } from '../_component/TableBook';
+import { Metadata } from 'next';
+import { unauthorized } from 'next/navigation';
+
+import { Button } from '@/components/ui/button';
 import { columns } from './column';
 import { DataTable } from './data-table';
-import { useDataStore } from '@/lib/store';
-import { useEffect } from 'react';
 
-// export const generateMetadata = async (): Promise<Metadata> => {
-// 	const dummyUserName = 'mikey';
+import { getServerSession } from '@/lib/auth-get-sessions';
+import HeaderSearch from '../_component/HeaderSearch';
 
-// 	return {
-// 		title: `All Books | ${dummyUserName}`,
-// 		description: `Welcome to Analytics overview ${dummyUserName}.`,
-// 		openGraph: {
-// 			title: `All Books | ${dummyUserName}`,
-// 			description: 'Private Analytics',
-// 			url: 'https://localhost:3000/dashboard/analytics',
-// 			siteName: 'rolddev-crm',
-// 			type: 'website'
-// 		}
-// 	};
-// };
+export const generateMetadata = async (): Promise<Metadata> => {
+	const dummyUserName = 'mikey';
 
-export default function AllBooksPage() {
-	const { setBooks } = useDataStore();
-	const books = useDataStore((state) => state.bookData);
+	return {
+		title: `All Books | ${dummyUserName}`,
+		description: `Welcome to Analytics overview ${dummyUserName}.`,
+		openGraph: {
+			title: `All Books | ${dummyUserName}`,
+			description: 'Private Analytics',
+			url: 'https://localhost:3000/dashboard/analytics',
+			siteName: 'rolddev-crm',
+			type: 'website'
+		}
+	};
+};
 
-	useEffect(() => {
-		const fetchBooks = async () => {
-			const response = await fetch('/books.json');
-			const data = await response.json();
+export default async function AllBooksPage() {
+	const session = await getServerSession();
+	const user = session?.user;
 
-			setBooks(data);
-		};
-
-		fetchBooks();
-	}, [setBooks]);
+	if (!user) unauthorized();
 
 	return (
 		<div className='lg:ml-96 px-4 py-20 lg:px-0 lg:py-8 max-w-7xl flex flex-col'>
-			{/* <TableBook /> */}
-			<DataTable columns={columns} data={books} />
+			<HeaderSearch user={user} />
+
+			<div className='p-4 bg-white rounded-md'>
+				<div className='mb-4 flex items-center justify-between'>
+					<h1 className='text-xl text-gray-900 font-semibold'>All Books</h1>
+
+					<div className='flex gap-2'>
+						<Button variant='outline' className='cursor-pointer'>
+							A/Z
+						</Button>
+						<Button className='bg-blue-900 cursor-pointer'>
+							Create New Book
+						</Button>
+					</div>
+				</div>
+
+				<DataTable columns={columns} />
+			</div>
 		</div>
 	);
 }

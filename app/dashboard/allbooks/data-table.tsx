@@ -18,18 +18,38 @@ import {
 } from '@/components/ui/table';
 
 import { Button } from '@/components/ui/button';
+import { useDataStore } from '@/lib/store';
+import { useEffect } from 'react';
+import { BookProps } from '../_lib/types';
+
+type Books = BookProps[];
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
-	data: TData[];
+	// data: TData[];
 }
 
-export function DataTable<TData, TValue>({
-	columns,
-	data
+export function DataTable<TData extends object, TValue>({
+	columns
 }: DataTableProps<TData, TValue>) {
+	const { setBooks } = useDataStore();
+	const books = useDataStore((state) => state.bookData);
+
+	useEffect(() => {
+		const fetchBooks = async () => {
+			const response = await fetch('/books.json');
+			const data = await response.json();
+
+			setBooks(data);
+		};
+
+		fetchBooks();
+	}, [setBooks]);
+
+	const typeBooks = books as TData[];
+
 	const table = useReactTable({
-		data,
+		data: typeBooks,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel()
@@ -37,14 +57,17 @@ export function DataTable<TData, TValue>({
 
 	return (
 		<div>
-			<div className='overflow-hidden rounded-md border'>
-				<Table>
-					<TableHeader>
+			<div className='overflow-hidden rounded-sm'>
+				<Table className='border-0'>
+					<TableHeader className='bg-blue-50'>
 						{table.getHeaderGroups().map((headerGroup) => (
-							<TableRow key={headerGroup.id}>
+							<TableRow key={headerGroup.id} className='border-0'>
 								{headerGroup.headers.map((header) => {
 									return (
-										<TableHead key={header.id}>
+										<TableHead
+											key={header.id}
+											className='border-b border-gray-200 font-semibold text-gray-600 bg-blue-50'
+										>
 											{header.isPlaceholder
 												? null
 												: flexRender(
@@ -57,15 +80,19 @@ export function DataTable<TData, TValue>({
 							</TableRow>
 						))}
 					</TableHeader>
-					<TableBody>
+					<TableBody className='bg-white'>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && 'selected'}
+									className='border-0 hover:bg-gray-50 transition-colors'
 								>
 									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
+										<TableCell
+											key={cell.id}
+											className='border-b border-b-gray-200'
+										>
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext()
