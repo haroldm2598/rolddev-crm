@@ -7,6 +7,7 @@ import { ImFileEmpty } from 'react-icons/im';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BookProps } from '../_lib/types';
+import BookTemplate from './BookTemplate';
 
 interface BookBorrowProps {
 	title: string;
@@ -53,13 +54,15 @@ export function BookBorrow({
 						>
 							{/* Left side: book image and info */}
 							<div className='flex items-center gap-3'>
-								<Image
+								{/* <Image
 									src={book.coverUrl}
 									alt={book.title}
 									width={45}
 									height={65}
 									className='rounded-md object-cover'
-								/>
+								/> */}
+								<BookTemplate cover={book.coverUrl} title={book.title} />
+
 								<div className='flex flex-col'>
 									<h3 className='text-sm font-semibold text-gray-900'>
 										{book.title}

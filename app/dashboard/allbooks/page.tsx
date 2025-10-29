@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import { unauthorized } from 'next/navigation';
+import { IoMdAdd } from 'react-icons/io';
+import { TbArrowsSort } from 'react-icons/tb';
 
 import { Button } from '@/components/ui/button';
 import { columns } from './column';
@@ -41,9 +43,10 @@ export default async function AllBooksPage() {
 					<div className='flex gap-2'>
 						<Button variant='outline' className='cursor-pointer'>
 							A/Z
+							<TbArrowsSort />
 						</Button>
 						<Button className='bg-blue-900 cursor-pointer'>
-							Create New Book
+							<IoMdAdd className='text-white' /> Create New Book
 						</Button>
 					</div>
 				</div>
