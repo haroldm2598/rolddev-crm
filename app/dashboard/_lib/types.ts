@@ -1,10 +1,13 @@
 export interface BookProps {
-	id: number;
+	id: string;
 	title: string;
 	author: string;
-	genres: string;
+	genre?: string | null;
+	rating?: number | null;
 	user: string;
-	date: string;
+	date?: string;
 	coverUrl: string;
-	// userAvatar: string;
+	coverColor?: string | null;
+	description?: string | null;
+	summary?: string | null;
 }

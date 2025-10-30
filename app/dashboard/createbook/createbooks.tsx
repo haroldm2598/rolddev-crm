@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { CreateBookFormValues, CreateBookSchema } from '../_lib/create-zod';
 import { Textarea } from '@/components/ui/textarea';
+import { useBooks } from '../_lib/useBooks';
 
 export default function CreateBooks() {
 	const [error, setError] = useState<string | null>(null);
@@ -36,8 +37,31 @@ export default function CreateBooks() {
 		}
 	});
 
+	const { addBook } = useBooks();
+
 	const onSubmit = async (values: CreateBookFormValues) => {
 		setError(null);
+		const {
+			title,
+			author,
+			genre,
+			rating,
+			coverUrl,
+			coverColor,
+			description,
+			summary
+		} = values;
+
+		await addBook.mutateAsync({
+			title: title,
+			author: author,
+			genre: genre,
+			rating: Number(rating),
+			coverUrl: coverUrl,
+			coverColor: coverColor,
+			description: description,
+			summary: summary
+		});
 	};
 
 	return (

@@ -20,9 +20,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { useDataStore } from '@/lib/store';
 import { useEffect } from 'react';
-import { BookProps } from '../_lib/types';
-
-type Books = BookProps[];
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];

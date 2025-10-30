@@ -77,12 +77,12 @@ model Verification {
 }
 
 model Book {
-  id          String   @id
+  id          String   @id @default(cuid())
   title       String
   author      String
   genre       String
   rating      Int
-  coverlUrl   String
+  coverUrl    String
   coverColor  String
   description String
   summary     String

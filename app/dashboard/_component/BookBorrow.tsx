@@ -68,7 +68,7 @@ export function BookBorrow({
 										{book.title}
 									</h3>
 									<p className='text-xs text-gray-500'>
-										By {book.author} • {book.genres}
+										By {book.author} • {book.genre}
 									</p>
 									{/* <div className='flex items-center gap-2 mt-1'>
 									<Image
