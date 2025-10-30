@@ -75,3 +75,17 @@ model Verification {
 
   @@map("verification")
 }
+
+model Book {
+  id          String   @id
+  title       String
+  author      String
+  genre       String
+  rating      Int
+  coverlUrl   String
+  coverColor  String
+  description String
+  summary     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}

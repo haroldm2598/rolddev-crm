@@ -9,6 +9,7 @@ import { DataTable } from './data-table';
 
 import { getServerSession } from '@/lib/auth-get-sessions';
 import HeaderSearch from '../_component/HeaderSearch';
+import Link from 'next/link';
 
 export const generateMetadata = async (): Promise<Metadata> => {
 	const dummyUserName = 'mikey';
@@ -45,9 +46,11 @@ export default async function AllBooksPage() {
 							A/Z
 							<TbArrowsSort />
 						</Button>
-						<Button className='bg-blue-900 cursor-pointer'>
-							<IoMdAdd className='text-white' /> Create New Book
-						</Button>
+						<Link href='/dashboard/createbook'>
+							<Button className='bg-blue-900 cursor-pointer'>
+								<IoMdAdd className='text-white' /> Create New Book
+							</Button>
+						</Link>
 					</div>
 				</div>
 
