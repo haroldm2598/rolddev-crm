@@ -12,7 +12,6 @@ import {
 	FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-// import { signup } from '@/lib/actions/auth-actions';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -22,6 +21,8 @@ import { useBooks } from '../_lib/useBooks';
 
 export default function CreateBooks() {
 	const [error, setError] = useState<string | null>(null);
+	const [file, setFile] = useState<File | null>(null);
+
 	const router = useRouter();
 	const form = useForm<CreateBookFormValues>({
 		resolver: zodResolver(CreateBookSchema), // RHF will use Zod's rules for validation
@@ -40,6 +41,7 @@ export default function CreateBooks() {
 	const { addBook } = useBooks();
 
 	const onSubmit = async (values: CreateBookFormValues) => {
+		// Kailangan ko pala mag create panibagong bucket para sa image sa supabase nasa chatgpt lahat ng sagot
 		setError(null);
 		const {
 			title,
@@ -130,7 +132,15 @@ export default function CreateBooks() {
 						<FormItem>
 							<FormLabel>Cover Page</FormLabel>
 							<FormControl>
-								<Input placeholder='Upload Cover Book' type='file' {...field} />
+								{/* <Input placeholder='Upload Cover Book' type='file' {...field} /> */}
+								<Input
+									type='file'
+									accept='image/*'
+									onChange={(e) => {
+										const file = e.target.files?.[0];
+										setFile(file || null);
+									}}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
