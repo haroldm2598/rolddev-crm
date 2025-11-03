@@ -143,28 +143,6 @@ export default function CreateBooks() {
 					)}
 				/>
 
-				{/* <FormField
-					control={form.control}
-					name='coverUrl'
-					render={() => (
-						<FormItem>
-							<FormLabel>Cover Page</FormLabel>
-							<FormControl> */}
-				{/* <Input placeholder='Upload Cover Book' type='file' {...field} /> */}
-				{/* <Input
-									type='file'
-									accept='image/*'
-									onChange={(e) => {
-										const file = e.target.files?.[0];
-										setFile(file || null);
-									}}
-								/> */}
-				{/* </FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/> */}
-
 				<FormField
 					control={form.control}
 					name='coverUrl'
