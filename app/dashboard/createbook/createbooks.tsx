@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { CreateBookFormValues, CreateBookSchema } from '../_lib/create-zod';
 import { Textarea } from '@/components/ui/textarea';
 import { useBooks } from '../_lib/useBooks';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function CreateBooks() {
 	const [error, setError] = useState<string | null>(null);
@@ -43,27 +44,44 @@ export default function CreateBooks() {
 	const onSubmit = async (values: CreateBookFormValues) => {
 		// Kailangan ko pala mag create panibagong bucket para sa image sa supabase nasa chatgpt lahat ng sagot
 		setError(null);
-		const {
-			title,
-			author,
-			genre,
-			rating,
-			coverUrl,
-			coverColor,
-			description,
-			summary
-		} = values;
+
+		let coverUrl = '';
+
+		// 🟢 NEW: Upload image to Supabase Storage (bucket: books-image)
+		if (file) {
+			const fileName = `${Date.now()}_${file.name}`;
+
+			const { data, error: uploadError } = await supabase.storage
+				.from('books-image') // your Supabase bucket name
+				.upload(fileName, file);
+
+			if (uploadError) {
+				setError('Failed to upload cover image');
+				console.error(uploadError);
+				return;
+			}
+
+			// 🟢 Get public URL
+			const { data: publicUrlData } = supabase.storage
+				.from('books-image')
+				.getPublicUrl(data.path);
+
+			coverUrl = publicUrlData.publicUrl;
+		}
 
 		await addBook.mutateAsync({
-			title: title,
-			author: author,
-			genre: genre,
-			rating: Number(rating),
+			title: values.title,
+			author: values.author,
+			genre: values.genre,
+			rating: Number(values.rating),
 			coverUrl: coverUrl,
-			coverColor: coverColor,
-			description: description,
-			summary: summary
+			coverColor: values.coverColor,
+			description: values.description,
+			summary: values.summary
 		});
+
+		toast.success('Book created successfully!');
+		router.push('/dashboard');
 	};
 
 	return (
@@ -125,14 +143,35 @@ export default function CreateBooks() {
 					)}
 				/>
 
+				{/* <FormField
+					control={form.control}
+					name='coverUrl'
+					render={() => (
+						<FormItem>
+							<FormLabel>Cover Page</FormLabel>
+							<FormControl> */}
+				{/* <Input placeholder='Upload Cover Book' type='file' {...field} /> */}
+				{/* <Input
+									type='file'
+									accept='image/*'
+									onChange={(e) => {
+										const file = e.target.files?.[0];
+										setFile(file || null);
+									}}
+								/> */}
+				{/* </FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/> */}
+
 				<FormField
 					control={form.control}
 					name='coverUrl'
-					render={({ field }) => (
+					render={() => (
 						<FormItem>
-							<FormLabel>Cover Page</FormLabel>
+							<FormLabel>Book Cover</FormLabel>
 							<FormControl>
-								{/* <Input placeholder='Upload Cover Book' type='file' {...field} /> */}
 								<Input
 									type='file'
 									accept='image/*'
