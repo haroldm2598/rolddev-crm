@@ -1,43 +1,54 @@
-// app/books/[id]/page.tsx
+import {
+	dehydrate,
+	HydrationBoundary,
+	QueryClient
+} from '@tanstack/react-query';
 import prisma from '@/lib/prisma';
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
-// import { getQueryClient } from "@/lib/queryClient";
-import { fetchBookById } from '../../_lib/fetchBookById';
-import BookPageClient from './BookPageClient';
+import BookDetails from './BookDetails';
 
-interface BookPageProps {
-	params: { id: string };
-}
+// this is metadata
+// export async function generateMetadata({ params }: { params: { id: string } }) {
+// 	const book = await prisma.book.findUnique({ where: { id: params.id } });
 
-// --- Static paths (SSG) ---
-export async function generateStaticParams() {
-	const books = await prisma.book.findMany({
-		select: { id: true },
-		take: 100 // 👈 limit for faster builds
+// 	if (!book) return { title: 'Book Not Found' };
+
+// 	return {
+// 		title: `${book.title} | Book Details`,
+// 		description: `Read more about ${book.title} by ${book.author}.`,
+// 		openGraph: {
+// 			title: book.title,
+// 			description: book.summary,
+// 			images: [{ url: book.coverUrl }]
+// 		}
+// 	};
+// }
+
+// ✅ Server Component
+export default async function BookPage({ params }: { params: { id: string } }) {
+	const queryClient = new QueryClient();
+
+	// Prefetch from Prisma (Supabase-backed)
+	const book = await prisma.book.findUnique({
+		where: { id: params.id }
 	});
 
-	return books.map((book) => ({ id: book.id }));
-}
+	if (!book) {
+		return (
+			<div className='p-8 text-center text-gray-500'>
+				<h2 className='text-xl font-semibold'>Book not found</h2>
+			</div>
+		);
+	}
 
-// --- Incremental Static Regeneration (ISR) ---
-export const revalidate = 60; // Regenerate page every 60s
-
-// --- Server Component ---
-export default async function BookPage({ params }: BookPageProps) {
-	// pa edit mo nalang to kasi mayroon nako sa provider nung tanstack chatGPT mo nalng
-	const queryClient = getQueryClient();
-
-	// Prefetch once for hydration
+	// Preload for TanStack Query hydration
 	await queryClient.prefetchQuery({
 		queryKey: ['book', params.id],
-		queryFn: () => fetchBookById(params.id)
+		queryFn: async () => book
 	});
 
-	const dehydratedState = dehydrate(queryClient);
-
 	return (
-		<HydrationBoundary state={dehydratedState}>
-			<BookPageClient id={params.id} />
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<BookDetails id={params.id} initialData={book} />
 		</HydrationBoundary>
 	);
 }

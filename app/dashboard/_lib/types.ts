@@ -4,7 +4,7 @@ export interface BookProps {
 	author: string;
 	genre?: string | null;
 	rating?: number | null;
-	user: string;
+	user?: string;
 	date?: string;
 	coverUrl: string;
 	coverColor?: string | null;

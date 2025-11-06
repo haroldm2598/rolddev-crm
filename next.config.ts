@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
 				protocol: 'https',
 				hostname: 'randomuser.me',
 				port: ''
+			},
+			{
+				protocol: 'https',
+				hostname: '*.supabase.co',
+				port: ''
 			}
 		]
 	}

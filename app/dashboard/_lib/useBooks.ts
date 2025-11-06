@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { BookProps } from './types';
 
 export function useBooks() {
 	const queryClient = useQueryClient();
@@ -37,4 +38,18 @@ export function useBooks() {
 	});
 
 	return { books, isLoading, addBook };
+}
+
+export function useBook(id: string, initialData?: BookProps) {
+	return useQuery({
+		queryKey: ['book', id],
+		queryFn: async () => {
+			const res = await fetch(`/api/book/${id}`);
+			if (!res.ok) throw new Error('Book not found');
+			return res.json();
+		},
+		initialData,
+		enabled: !!id,
+		staleTime: 1000 * 60 * 5 // cache for 5 min
+	});
 }
