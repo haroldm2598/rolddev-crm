@@ -61,7 +61,11 @@ export function BookBorrow({
 									height={65}
 									className='rounded-md object-cover'
 								/> */}
-								<BookTemplate cover={book.coverUrl} title={book.title} />
+								<BookTemplate
+									cover={book.coverUrl}
+									title={book.title}
+									coverColor={book.coverColor}
+								/>
 
 								<div className='flex flex-col'>
 									<h3 className='text-sm font-semibold text-gray-900'>

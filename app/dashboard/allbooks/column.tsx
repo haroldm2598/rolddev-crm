@@ -3,6 +3,40 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { BookProps } from '../_lib/types';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Pencil, Trash2, ExternalLink } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+const ActionCell = ({ bookId }: { bookId: string }) => {
+	const router = useRouter();
+
+	const handleView = () => {
+		router.push(`/dashboard/books/${bookId}`);
+		console.log('View ', bookId);
+	};
+
+	// const handleEdit = () => {
+	// 	console.log('Edit ', bookId);
+	// };
+
+	const handleDelete = () => {
+		console.log('Delete ', bookId);
+	};
+
+	return (
+		<div className='flex items-center gap-1'>
+			<Button variant='ghost' size='icon' onClick={handleView}>
+				<ExternalLink className='h-4 w-4 text-blue-500' />
+			</Button>
+			{/* <Button variant='ghost' size='icon' onClick={handleEdit}>
+				<Pencil className='h-4 w-4 text-blue-500' />
+			</Button> */}
+			<Button variant='ghost' size='icon' onClick={handleDelete}>
+				<Trash2 className='h-4 w-4 text-red-500' />
+			</Button>
+		</div>
+	);
+};
 
 export const columns: ColumnDef<BookProps>[] = [
 	{
@@ -13,13 +47,19 @@ export const columns: ColumnDef<BookProps>[] = [
 			const title = row.getValue('title') as string;
 			return (
 				<div className='flex justify-center'>
-					<Image
-						src={coverUrl}
-						alt={title}
-						width={45}
-						height={65}
-						className='rounded-md object-cover shadow-sm'
-					/>
+					{coverUrl ? (
+						<Image
+							src={coverUrl}
+							alt={title}
+							width={80}
+							height={130}
+							className='rounded-md object-cover shadow-sm'
+						/>
+					) : (
+						<div className='w-[60px] h-[80px] bg-gray-200 flex items-center justify-center text-xs text-gray-500'>
+							No Cover
+						</div>
+					)}
 				</div>
 			);
 		}
@@ -42,6 +82,11 @@ export const columns: ColumnDef<BookProps>[] = [
 	},
 	{
 		accessorKey: 'action',
-		header: 'Action'
+		header: 'Action',
+		cell: ({ row }) => {
+			const book = row.original;
+
+			return <ActionCell bookId={book.id} />;
+		}
 	}
 ];

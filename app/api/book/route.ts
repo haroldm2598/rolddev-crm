@@ -7,6 +7,19 @@ export async function GET() {
 		const books = await prisma.book.findMany({
 			orderBy: {
 				createdAt: 'desc'
+			},
+			select: {
+				id: true,
+				title: true,
+				author: true,
+				genre: true,
+				rating: true,
+				coverUrl: true,
+				coverColor: true,
+				description: true,
+				summary: true,
+				createdAt: true,
+				updatedAt: true
 			}
 		});
 

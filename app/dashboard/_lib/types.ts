@@ -7,7 +7,7 @@ export interface BookProps {
 	user?: string;
 	date?: string;
 	coverUrl: string;
-	coverColor?: string | null;
+	coverColor: string;
 	description?: string | null;
 	summary?: string | null;
 }

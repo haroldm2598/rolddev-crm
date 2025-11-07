@@ -81,7 +81,7 @@ export default function CreateBooks() {
 		});
 
 		toast.success('Book created successfully!');
-		router.push('/dashboard');
+		router.push('/dashboard/allbooks');
 	};
 
 	return (

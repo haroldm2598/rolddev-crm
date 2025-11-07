@@ -4,21 +4,16 @@ import React, { useEffect } from 'react';
 import { BookBorrow } from './BookBorrow';
 import { useDataStore } from '@/lib/store';
 import DashboardHeader from '@/components/DashboardHeader';
+import { useFetchBooks } from '../_lib/useBooks';
 
 export default function Dashboard() {
 	const { setBooks } = useDataStore();
 	const books = useDataStore((state) => state.bookData);
+	const { data: bookData, isLoading, isError, error } = useFetchBooks();
 
 	useEffect(() => {
-		const fetchBooks = async () => {
-			const response = await fetch('/books.json');
-			const data = await response.json();
-
-			setBooks(data);
-		};
-
-		fetchBooks();
-	}, [setBooks]);
+		if (bookData.length > 0) setBooks(bookData);
+	}, [bookData, setBooks]);
 
 	return (
 		<div className='space-y-4'>

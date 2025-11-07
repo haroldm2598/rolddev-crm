@@ -1,6 +1,29 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { BookProps } from './types';
 
+export function useFetchBooks() {
+	const {
+		data: bookData,
+		isLoading,
+		isError,
+		error,
+		refetch
+	} = useQuery({
+		queryKey: ['books'],
+		queryFn: async () => {
+			const res = await fetch('/api/book', { cache: 'no-store' });
+			const result = await res.json();
+			return result.data;
+		},
+		staleTime: 1000 * 60 * 5, // ✅ Added: 5 minutes cache freshness
+		gcTime: 1000 * 60 * 30, // ✅ Added: keep in cache for 30 minutes
+		refetchOnWindowFocus: false, // ✅ Added: don't refetch when switching tabs
+		refetchOnReconnect: true // ✅ Added: refetch when user regains connection
+	});
+
+	return { data: bookData ?? [], isLoading, isError, error, refetch };
+}
+
 export function useBooks() {
 	const queryClient = useQueryClient();
 

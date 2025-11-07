@@ -19,7 +19,8 @@ import {
 
 import { Button } from '@/components/ui/button';
 import { useDataStore } from '@/lib/store';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useFetchBooks } from '../_lib/useBooks';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -31,19 +32,14 @@ export function DataTable<TData extends object, TValue>({
 }: DataTableProps<TData, TValue>) {
 	const { setBooks } = useDataStore();
 	const books = useDataStore((state) => state.bookData);
+	const { data: bookData, isLoading, isError, error } = useFetchBooks();
 
 	useEffect(() => {
-		const fetchBooks = async () => {
-			const response = await fetch('/books.json');
-			const data = await response.json();
+		if (bookData.length > 0) setBooks(bookData);
+	}, [bookData, setBooks]);
 
-			setBooks(data);
-		};
-
-		fetchBooks();
-	}, [setBooks]);
-
-	const typeBooks = books as TData[];
+	// const typeBooks = books as TData[];
+	const typeBooks = useMemo(() => (books || []) as TData[], [books]);
 
 	const table = useReactTable({
 		data: typeBooks,
@@ -51,6 +47,12 @@ export function DataTable<TData extends object, TValue>({
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel()
 	});
+
+	// ✅ Added loading + error UI states
+	if (isLoading)
+		return <div className='p-4 text-gray-500'>Loading books...</div>;
+	if (isError)
+		return <div className='p-4 text-red-500'>Error: {error?.message}</div>;
 
 	return (
 		<div>
