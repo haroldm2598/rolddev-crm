@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { BookProps } from './types';
 
+// fetch all data
 export function useFetchBooks() {
 	const {
 		data: bookData,
@@ -24,6 +25,7 @@ export function useFetchBooks() {
 	return { data: bookData ?? [], isLoading, isError, error, refetch };
 }
 
+// create data
 export function useBooks() {
 	const queryClient = useQueryClient();
 
@@ -63,6 +65,7 @@ export function useBooks() {
 	return { books, isLoading, addBook };
 }
 
+// fetch single data
 export function useBook(id: string, initialData?: BookProps) {
 	return useQuery({
 		queryKey: ['book', id],
@@ -76,3 +79,5 @@ export function useBook(id: string, initialData?: BookProps) {
 		staleTime: 1000 * 60 * 5 // cache for 5 min
 	});
 }
+
+// update single data

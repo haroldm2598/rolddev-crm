@@ -2,12 +2,12 @@ export interface BookProps {
 	id: string;
 	title: string;
 	author: string;
-	genre?: string | null;
-	rating?: number | null;
+	genre?: string;
+	rating?: number;
 	user?: string;
 	date?: string;
 	coverUrl: string;
 	coverColor: string;
-	description?: string | null;
-	summary?: string | null;
+	description?: string;
+	summary?: string;
 }
