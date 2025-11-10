@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { BookProps } from './types';
-
+// Using Tanstack Query for Server State
 // fetch all data
 export function useFetchBooks() {
 	const {
@@ -81,3 +81,24 @@ export function useBook(id: string, initialData?: BookProps) {
 }
 
 // update single data
+export function useUpdateBook() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (bookData: BookProps) => {
+			const { id, ...rest } = bookData;
+			const res = await fetch(`/api/book/${id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(rest)
+			});
+			const result = await res.json();
+			return result.data;
+		},
+		onSuccess: (data) => {
+			// ✅ Update both cache entries for smoother UX
+			queryClient.setQueryData(['book', data.id], data);
+			queryClient.invalidateQueries({ queryKey: ['books'] });
+		}
+	});
+}

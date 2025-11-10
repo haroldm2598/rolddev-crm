@@ -13,7 +13,7 @@ export const CreateBookSchema = z.object({
 	rating: z.string().min(1, {
 		message: 'rating is Required'
 	}),
-	coverUrl: z.string().optional(),
+	coverUrl: z.string().min(1, { message: 'Cover URL is required' }), // ✅ now required
 	coverColor: z.string().min(1, {
 		message: 'Cover Color is Required'
 	}),

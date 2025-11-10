@@ -5,6 +5,7 @@ import { useBook } from '../../_lib/useBooks';
 import { BookProps } from '../../_lib/types';
 import ButtonPrevious from '../../_component/ButtonPrevious';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface BookDetailsProps {
 	id: string;
@@ -44,7 +45,9 @@ export default function BookDetails({ id, initialData }: BookDetailsProps) {
 					<p className='text-gray-700 leading-relaxed'>{book.description}</p>
 
 					<div className='mt-auto'>
-						<Button className='bg-blue-600 w-full'>Edit Book</Button>
+						<Link href={`/dashboard/books/editbooks/${book.id}`}>
+							<Button className='bg-blue-600 w-full'>Edit Book</Button>
+						</Link>
 					</div>
 				</div>
 			</div>

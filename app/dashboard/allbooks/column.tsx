@@ -46,13 +46,13 @@ export const columns: ColumnDef<BookProps>[] = [
 			const coverUrl = row.getValue('coverUrl') as string;
 			const title = row.getValue('title') as string;
 			return (
-				<div className='flex justify-center'>
+				<div className='flex justify-center h-full'>
 					{coverUrl ? (
 						<Image
 							src={coverUrl}
 							alt={title}
 							width={80}
-							height={130}
+							height={100}
 							className='rounded-md object-cover shadow-sm'
 						/>
 					) : (
