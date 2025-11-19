@@ -72,7 +72,8 @@ export function useBook(id: string, initialData?: BookProps) {
 		queryFn: async () => {
 			const res = await fetch(`/api/book/${id}`);
 			if (!res.ok) throw new Error('Book not found');
-			return res.json();
+			const data: BookProps = await res.json();
+			return data;
 		},
 		initialData,
 		enabled: !!id,
@@ -93,7 +94,7 @@ export function useUpdateBook() {
 				body: JSON.stringify(rest)
 			});
 			const result = await res.json();
-			return result.data;
+			return result.data as BookProps;
 		},
 		onSuccess: (data) => {
 			// ✅ Update both cache entries for smoother UX

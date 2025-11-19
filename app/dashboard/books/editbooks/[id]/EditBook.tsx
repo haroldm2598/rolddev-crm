@@ -27,7 +27,6 @@ import { Textarea } from '@/components/ui/textarea';
 
 export default function EditBook() {
 	// lipat mo yung router sa page
-	// Still having an error in this code fix this next week for "any" of form values
 	const router = useRouter();
 	const { id } = useParams() as { id: string };
 	const { data: book, isLoading } = useBook(id);
@@ -40,13 +39,23 @@ export default function EditBook() {
 	// });
 
 	const form = useForm<EditBookFormValues>({
-		resolver: zodResolver(EditBookSchema) as any,
-		defaultValues: book
+		resolver: zodResolver(EditBookSchema),
+		defaultValues: book as Partial<EditBookFormValues>
 	});
 
 	// ✅ When book data is loaded, reset form values
 	useEffect(() => {
-		if (book) form.reset(book);
+		if (book)
+			form.reset({
+				title: book.title,
+				author: book.author,
+				genre: book.genre,
+				rating: book.rating?.toString(), // <-- FIXED
+				coverUrl: book.coverUrl,
+				coverColor: book.coverColor,
+				description: book.description,
+				summary: book.summary
+			});
 	}, [book, form]);
 
 	const onSubmit = async (values: EditBookFormValues) => {
@@ -69,16 +78,12 @@ export default function EditBook() {
 			coverUrl = publicUrlData.publicUrl;
 		}
 
-		// await updateBook({
-		// 	id,
-		// 	...values,
-		// 	coverUrl
-		// });
 		if (!book) return;
 
 		const updatedBook: BookProps = {
 			...book,
 			...values,
+			rating: values.rating ? Number(values.rating) : book.rating, // <-- FIXED
 			coverUrl: coverUrl ?? book.coverUrl,
 			id
 		};
