@@ -38,8 +38,9 @@ export default function EditBook() {
 	// 	resolver: zodResolver(EditBookSchema),
 	// 	defaultValues: book
 	// });
+
 	const form = useForm<EditBookFormValues>({
-		resolver: zodResolver(EditBookSchema) as any, // ✅ ADD THIS `as any` cast to fix type mismatch
+		resolver: zodResolver(EditBookSchema) as any,
 		defaultValues: book
 	});
 

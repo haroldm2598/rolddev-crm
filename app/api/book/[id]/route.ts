@@ -4,10 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic'; // ensure fresh fetch if called from client
 
-export async function GET(
-	req: Request,
-	{ params }: { params: { id: string } }
-) {
+interface ParamsIdProps {
+	params: { id: string };
+}
+
+export async function GET(req: Request, { params }: ParamsIdProps) {
 	const book = await prisma.book.findUnique({
 		where: { id: params.id }
 	});
@@ -44,6 +45,21 @@ export async function PUT(
 		return NextResponse.json(
 			{ success: false, error: 'Failed to update book' },
 			{ status: 500 }
+		);
+	}
+}
+
+export async function DELETE(req: Request, { params }: ParamsIdProps) {
+	try {
+		const book = await prisma.book.delete({
+			where: { id: params.id }
+		});
+
+		return NextResponse.json({ success: true, data: book });
+	} catch (error) {
+		return NextResponse.json(
+			{ success: false, error: `Book not found: ${error}` },
+			{ status: 404 }
 		);
 	}
 }

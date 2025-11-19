@@ -102,3 +102,24 @@ export function useUpdateBook() {
 		}
 	});
 }
+
+// delete single data
+export function useDeleteBook() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (id: string) => {
+			const res = await fetch(`/api/book/${id}`, {
+				method: 'DELETE'
+			});
+
+			const result = await res.json();
+			return result.data;
+		},
+		onSuccess: (data) => {
+			// ✅ Update both cache entries for smoother UX
+			queryClient.removeQueries({ queryKey: ['book', data.id] });
+			queryClient.invalidateQueries({ queryKey: ['books'] });
+		}
+	});
+}

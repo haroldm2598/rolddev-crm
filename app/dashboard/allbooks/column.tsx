@@ -6,9 +6,11 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Pencil, Trash2, ExternalLink } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useDeleteBook } from '../_lib/useBooks';
 
 const ActionCell = ({ bookId }: { bookId: string }) => {
 	const router = useRouter();
+	const { mutateAsync: deleteBook } = useDeleteBook();
 
 	const handleView = () => {
 		router.push(`/dashboard/books/${bookId}`);
@@ -19,7 +21,8 @@ const ActionCell = ({ bookId }: { bookId: string }) => {
 	// 	console.log('Edit ', bookId);
 	// };
 
-	const handleDelete = () => {
+	const handleDelete = async () => {
+		await deleteBook(bookId);
 		console.log('Delete ', bookId);
 	};
 
