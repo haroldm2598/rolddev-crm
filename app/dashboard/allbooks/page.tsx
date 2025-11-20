@@ -10,7 +10,8 @@ import { DataTable } from './data-table';
 import { getServerSession } from '@/lib/auth-get-sessions';
 import HeaderSearch from '../_component/HeaderSearch';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseClient';
+import { Suspense } from 'react';
+import SkeletonTable from '../_component/skeleton/SkeletonTable';
 
 export const generateMetadata = async (): Promise<Metadata> => {
 	const dummyUserName = 'mikey';
@@ -34,8 +35,6 @@ export default async function AllBooksPage() {
 
 	if (!user) unauthorized();
 
-	console.log(supabase);
-
 	return (
 		<div className='lg:ml-96 px-4 py-20 lg:px-0 lg:py-8 max-w-7xl flex flex-col'>
 			<HeaderSearch user={user} />
@@ -56,8 +55,9 @@ export default async function AllBooksPage() {
 						</Link>
 					</div>
 				</div>
-
-				<DataTable columns={columns} />
+				<Suspense fallback={<SkeletonTable columns={columns.length} />}>
+					<DataTable columns={columns} />
+				</Suspense>
 			</div>
 		</div>
 	);

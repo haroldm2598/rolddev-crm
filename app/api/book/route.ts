@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 				author,
 				genre: genre ?? '',
 				rating: rating ?? 0,
-				coverUrl,
+				coverUrl: coverUrl ?? '',
 				coverColor: coverColor ?? '',
 				description: description ?? '',
 				summary: summary ?? ''

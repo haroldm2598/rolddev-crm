@@ -4,7 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { BookProps } from '../_lib/types';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Pencil, Trash2, ExternalLink } from 'lucide-react';
+import { Trash2, ExternalLink } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useDeleteBook } from '../_lib/useBooks';
 
