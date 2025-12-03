@@ -1,17 +1,15 @@
 import { Metadata } from 'next';
-import { unauthorized } from 'next/navigation';
+import Link from 'next/link';
+import { Suspense } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { TbArrowsSort } from 'react-icons/tb';
 
-import { Button } from '@/components/ui/button';
 import { columns } from './column';
 import { DataTable } from './data-table';
 
-import { getServerSession } from '@/lib/auth-get-sessions';
 import HeaderSearch from '../_component/HeaderSearch';
-import Link from 'next/link';
-import { Suspense } from 'react';
 import SkeletonTable from '../_component/skeleton/SkeletonTable';
+import { Button } from '@/components/ui/button';
 
 export const generateMetadata = async (): Promise<Metadata> => {
 	const dummyUserName = 'mikey';
@@ -30,14 +28,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function AllBooksPage() {
-	const session = await getServerSession();
-	const user = session?.user;
-
-	if (!user) unauthorized();
-
 	return (
 		<div className='lg:ml-96 px-4 py-20 lg:px-0 lg:py-8 max-w-7xl flex flex-col'>
-			<HeaderSearch user={user} />
+			<HeaderSearch />
 
 			<div className='p-4 bg-white rounded-md'>
 				<div className='mb-4 flex items-center justify-between'>
