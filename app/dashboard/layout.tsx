@@ -6,6 +6,7 @@ import Sidebar from './_component/Sidebar';
 import { Toaster } from '@/components/ui/sonner';
 
 import { getServerSession } from '@/lib/auth-get-sessions';
+import { UserProvider } from './_hooks/useContext';
 
 interface DashboardLayout {
 	children: ReactNode;
@@ -26,10 +27,12 @@ export default async function DashboardLayout({ children }: DashboardLayout) {
 	if (!user) unauthorized();
 
 	return (
-		<div className='bg-blue-50 min-h-dvh'>
-			<Sidebar user={user} />
-			{children}
-			<Toaster />
-		</div>
+		<UserProvider user={user}>
+			<div className='bg-blue-50 min-h-dvh'>
+				<Sidebar user={user} />
+				{children}
+				<Toaster />
+			</div>
+		</UserProvider>
 	);
 }
