@@ -48,7 +48,11 @@ export default async function AllBooksPage() {
 						</Link>
 					</div>
 				</div>
-				<Suspense fallback={<SkeletonTable columns={columns.length} />}>
+				{/* test area */}
+				{/* <div>
+					<SkeletonTable columns={1} />
+				</div> */}
+				<Suspense fallback={<SkeletonTable columns={1} />}>
 					<DataTable columns={columns} />
 				</Suspense>
 			</div>
