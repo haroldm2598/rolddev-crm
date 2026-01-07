@@ -1,0 +1,49 @@
+"use client";
+import { useUser } from "../_hooks/useContext";
+
+import Link from "next/link";
+import { Suspense } from "react";
+import { IoMdAdd } from "react-icons/io";
+import { TbArrowsSort } from "react-icons/tb";
+
+import { columns } from "./column";
+import { DataTable } from "./data-table";
+
+import HeaderSearch from "../_component/HeaderSearch";
+import SkeletonTable from "../_component/skeleton/SkeletonTable";
+import { Button } from "@/components/ui/button";
+
+export default function AllBooksClient() {
+  const user = useUser();
+
+  return (
+    <>
+      <HeaderSearch />
+
+      <div className="p-4 bg-white rounded-md">
+        <div className="mb-4 flex items-center justify-between">
+          <h1 className="text-xl text-gray-900 font-semibold">All Books</h1>
+
+          <div className="flex gap-2">
+            <Button variant="outline" className="cursor-pointer">
+              A/Z
+              <TbArrowsSort />
+            </Button>
+
+            {user?.role === "admin" && (
+              <Link href="/dashboard/createbook">
+                <Button className="bg-blue-900 cursor-pointer">
+                  <IoMdAdd className="text-white" /> Create New Book
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+
+        <Suspense fallback={<SkeletonTable columns={1} />}>
+          <DataTable columns={columns} />
+        </Suspense>
+      </div>
+    </>
+  );
+}

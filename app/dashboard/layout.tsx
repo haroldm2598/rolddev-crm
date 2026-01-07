@@ -30,10 +30,8 @@ export default async function DashboardLayout({ children }: DashboardLayout) {
   return (
     <UserProvider user={user}>
       <div className="bg-blue-50 min-h-dvh">
-        <Sidebar user={user} />
-        {/* instead of using role make a emailisverrified */}
-        {!user.role && <EmailVerrified />}
-
+        <Sidebar />
+        {!user.emailVerified && <EmailVerrified />}
         {children}
         <Toaster />
       </div>
